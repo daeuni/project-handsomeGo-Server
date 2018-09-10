@@ -8,7 +8,7 @@ router.use('/', user);
 const stamp = require('./controller/stamp/stamp_routes');
 router.use('/', stamp);
 
-const home = require('./controller/home/home_routes');
-router.use('/',home);
+// const home = require('./controller/home/home_routes');
+// router.use('/',home);
 
 module.exports = router;
