@@ -7,7 +7,7 @@ router.get('/:writer_id', async (req, res) => {
 
     const writer_id = req.params.writer_id;
 
-    const getStampListQuery = 'SELECT space_id, stamp_status FROM stamp WHERE writer_id = ? ORDER BY space_id DESC';
+    const getStampListQuery = 'SELECT space_id, stamp_status FROM stamp WHERE writer_id = ? ORDER BY space_id ASC';
 
     let getStampList = await pool.execute2(getStampListQuery, writer_id);
 
