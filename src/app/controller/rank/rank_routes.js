@@ -3,6 +3,6 @@ const router = express.Router();
 
 //랭크
 const rank = require('./rank');
-router.use('/rank', rank);
+router.use('/ranks', rank);
 
 module.exports = router;

@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
 
-//스탬프 조회
+//장소
 const stamp = require('./stamp');
-router.use('/stamp', stamp);
+router.use('/stamps', stamp);
 
 module.exports = router;
