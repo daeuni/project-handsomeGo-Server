@@ -26,6 +26,7 @@ router.get('/', async (req, res) => {
 
 });
 
+//스탬프 조회
 router.get('/:place_id', async (req, res) => {
 
     const ID = jwt.verify(req.headers.authorization);
@@ -37,7 +38,7 @@ router.get('/:place_id', async (req, res) => {
 
     if(ID == -1) {
 
-        let getStampInfo = await pool.execute3(getStamp, 1, place_id);
+        let getStampInfo = await pool.execute3(getStamp, ID, place_id);
         let getRankList = await pool.execute1(getRank);
 
         let object = {};
@@ -63,7 +64,53 @@ router.get('/:place_id', async (req, res) => {
         } 
 
         else {
+            if(getStampInfo.length == 0) {
+                object.status = "스탬프를 찍지 않았습니다."
+            }
+            else {
+                object.status = "스탬프를 찍었습니다."
+            }
             res.status(200).send({
+                message: "Successful Get Stamp Data",
+                data: object
+            });
+        }
+
+    }
+
+    else {
+        res.status(401).send({
+            message: "access denied",
+            data : null
+        });
+    }
+
+});
+
+//스탬프 적립
+router.post('/:place_id', async (req, res) => {
+
+    const ID = jwt.verify(req.headers.authorization);
+
+    const place_id = req.params.place_id;
+
+    const getStamp = 'SELECT p.place_id, p.place_name, p.place_category, p.place_pic, s.stamp_date, s.stamp_status FROM stamp s JOIN place p ON s.place_id = p.place_id where s.writer_id = ? AND s.place_id = ?';
+    const getRank = 'SELECT * FROM place ORDER BY place_star DESC';
+
+    if(ID == -1) {
+
+        let getStampInfo = await pool.execute3(getStamp, ID, place_id);
+        let getRankList = await pool.execute1(getRank);
+
+        if (!getStampInfo) {
+            res.status(500).send({
+                message: "Internel Server Error",
+                data : null
+            })
+        } 
+
+        else {
+            res.status(201).send({
                 message: "Successful Get Stamp Data",
                 data: object
             });

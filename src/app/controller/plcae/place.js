@@ -30,12 +30,23 @@ router.get('/', async (req, res) => {
 //장소 조회
 router.get('/:place_id', async (req, res) => {
 
-    const ID = jwt.verify(req.headers.authorization);
     const place_id = req.params.place_id;
 
     const getPlaceQuery = 'SELECT * FROM place where place_id = ?';
+    const getCommentCountQuery = 'SELECT count(*) as count FROM comment WHERE place_id = ?'
 
     let getPlaceInfo = await pool.execute2(getPlaceQuery, place_id);
+    let getCommentCount = await pool.execute2(getCommentCountQuery, place_id);
+
+    let object = {};
+    object.place_id = getPlaceInfo[0].place_id;
+    object.place_name = getPlaceInfo[0].place_name;
+    object.place_address = getPlaceInfo[0].place_address;
+    object.place_content = getPlaceInfo[0].place_content;
+    object.place_category = getPlaceInfo[0].place_category;
+    object.place_star = getPlaceInfo[0].place_star;
+    object.place_pic = getPlaceInfo[0].place_pic;
+    object.commentCount = getCommentCount[0].count;
 
     if (!getPlaceInfo) {
         res.status(500).send({
@@ -46,7 +57,7 @@ router.get('/:place_id', async (req, res) => {
     else {
         res.status(200).send({
             message: "Successful Get Stamp Status Data",
-            data: getPlaceInfo
+            data: object
         });
     }
 
@@ -55,12 +66,12 @@ router.get('/:place_id', async (req, res) => {
 //장소의 댓글들 조회
 router.get('/:place_id/comments', async (req, res) => {
 
-    //const ID = jwt.verify(req.headers.authorization);
-    let ID = 2;
+    const ID = jwt.verify(req.headers.authorization);
+    //let ID = 2;
     const place_id = req.params.place_id;
 
     const getPlaceQuery = 'SELECT * FROM comment WHERE place_id = ? ORDER BY comment_id DESC';
-    const getMyComment = 'SELECT c.*, w.writer_name FROM comment c JOIN writer w ON c.writer_id = w.writer_id WHERE c.place_id = ? AND c.writer_id = ?'
+    const getMyComment = 'SELECT w.writer_name, c.* FROM comment c JOIN writer w ON c.writer_id = w.writer_id WHERE c.place_id = ? AND c.writer_id = ?'
     const getMyStamp = 'SELECT * FROM stamp WHERE place_id = ? AND writer_id = ?'
     const getUser = 'SELECT * FROM writer WHERE writer_id = ?';
 
@@ -112,7 +123,7 @@ router.get('/:place_id/comments', async (req, res) => {
     }
     else {
         res.status(200).send({
-            message: "Successful Get Comment Data",
+            message: "Successful Get Comment List Data",
             data: object
         });
     }
