@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
 
-//장소
-const place = require('./place');
-router.use('/place', place);
+//랭크
+const rank = require('./rank');
+router.use('/rank', rank);
 
 module.exports = router;
