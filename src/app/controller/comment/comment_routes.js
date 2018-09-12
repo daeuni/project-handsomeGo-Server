@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
 
-//장소
-const place = require('./place');
-router.use('/places', place);
+//댓글
+const comment = require('./comment');
+router.use('/comments', comment);
 
 module.exports = router;

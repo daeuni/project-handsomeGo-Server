@@ -11,6 +11,9 @@ router.use('/', rank);
 const place = require('./controller/plcae/place_routes');
 router.use('/', place);
 
+const comment = require('./controller/comment/comment_routes');
+router.use('/', comment);
+
 const user = require('./controller/user/user_routes');
 router.use('/', user);
 
