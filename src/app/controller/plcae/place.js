@@ -6,8 +6,6 @@ const pool = require('../../module/pool.js');
 //장소 조회
 router.get('/', async (req, res) => {
 
-    const ID = jwt.verify(req.headers.authorization);
-
     const getPlaceQuery = 'SELECT * FROM place';
 
     let getPlaceInfo = await pool.execute2(getPlaceQuery);
@@ -67,7 +65,6 @@ router.get('/:place_id', async (req, res) => {
 router.get('/:place_id/comments', async (req, res) => {
 
     const ID = jwt.verify(req.headers.authorization);
-    //let ID = 2;
     const place_id = req.params.place_id;
 
     const getPlaceQuery = 'SELECT w.writer_name, c.* FROM comment c JOIN writer w ON c.writer_id = w.writer_id WHERE c.place_id = ? ORDER BY c.comment_id DESC';

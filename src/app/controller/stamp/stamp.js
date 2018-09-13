@@ -6,7 +6,7 @@ const pool = require('../../module/pool.js');
 router.get('/', async (req, res) => {
 
     const ID = jwt.verify(req.headers.authorization);
-    //let ID = 1;
+
     const getStampListQuery = 'SELECT p.place_id, p.place_name, p.place_address, p.place_star, p.place_pic, s.stamp_status FROM stamp s JOIN place p on s.place_id = p.place_id where s.writer_id = ?';
 
     const getUserQuery = 'SELECT * FROM writer WHERE writer_id = ?'
