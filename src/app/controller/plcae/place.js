@@ -20,7 +20,7 @@ router.get('/', async (req, res) => {
     }
     else {
         res.status(200).send({
-            message: "Successful Get Stamp Status Data",
+            message: "Successful Get Places Data",
             data: getPlaceInfo
         });
     }
@@ -56,7 +56,7 @@ router.get('/:place_id', async (req, res) => {
     }
     else {
         res.status(200).send({
-            message: "Successful Get Stamp Status Data",
+            message: "Successful Get Place Data",
             data: object
         });
     }
@@ -70,7 +70,7 @@ router.get('/:place_id/comments', async (req, res) => {
     //let ID = 2;
     const place_id = req.params.place_id;
 
-    const getPlaceQuery = 'SELECT * FROM comment WHERE place_id = ? ORDER BY comment_id DESC';
+    const getPlaceQuery = 'SELECT w.writer_name, c.* FROM comment c JOIN writer w ON c.writer_id = w.writer_id WHERE c.place_id = ? ORDER BY c.comment_id DESC';
     const getMyComment = 'SELECT w.writer_name, c.* FROM comment c JOIN writer w ON c.writer_id = w.writer_id WHERE c.place_id = ? AND c.writer_id = ?'
     const getMyStamp = 'SELECT * FROM stamp WHERE place_id = ? AND writer_id = ?'
     const getUser = 'SELECT * FROM writer WHERE writer_id = ?';
@@ -111,6 +111,7 @@ router.get('/:place_id/comments', async (req, res) => {
     else {
         object.message = "로그인 해주세요."
         object.status = "로그인 해주세요."
+        object.myComment = null
     }
 
     object.comments = getPlaceInfo;

@@ -6,21 +6,34 @@ const pool = require('../../module/pool.js');
 router.get('/', async (req, res) => {
 
     const ID = jwt.verify(req.headers.authorization);
-
+    //let ID = 1;
     const getStampListQuery = 'SELECT p.place_id, p.place_name, p.place_address, p.place_star, p.place_pic, s.stamp_status FROM stamp s JOIN place p on s.place_id = p.place_id where s.writer_id = ?';
 
+    const getUserQuery = 'SELECT * FROM writer WHERE writer_id = ?'
+
     let getStampList = await pool.execute2(getStampListQuery, ID);
+
+    let object = {};
+
+    if (ID != -1) {
+        let getUser = await pool.execute2(getUserQuery, ID);
+        object.status = getUser[0].writer_name;
+    }
+    else
+        object.status = "guest";
+
+    object.place = getStampList;
 
     if (!getStampList) {
         res.status(500).send({
             message: "Internel Server Error",
-            data : null
+            data: null
         })
-    } 
+    }
     else {
         res.status(200).send({
             message: "Successful Get Stamp Status Data",
-            data: getStampList
+            data: object
         });
     }
 
@@ -36,7 +49,7 @@ router.get('/:place_id', async (req, res) => {
     const getStamp = 'SELECT p.place_id, p.place_name, p.place_category, p.place_pic, s.stamp_date, s.stamp_status FROM stamp s JOIN place p ON s.place_id = p.place_id where s.writer_id = ? AND s.place_id = ?';
     const getRank = 'SELECT * FROM place ORDER BY place_star DESC';
 
-    if(ID == -1) {
+    if (ID != -1) {
 
         let getStampInfo = await pool.execute3(getStamp, ID, place_id);
         let getRankList = await pool.execute1(getRank);
@@ -49,9 +62,9 @@ router.get('/:place_id', async (req, res) => {
         object.stamp_date = getStampInfo[0].stamp_date;
         object.stamp_status = getStampInfo[0].stamp_status;
 
-        for(i = 0; i < getRankList.length; i++) {
-            if(place_id == getRankList[i].place_id) {
-                object.rank = i+1;
+        for (i = 0; i < getRankList.length; i++) {
+            if (place_id == getRankList[i].place_id) {
+                object.rank = i + 1;
                 break;
             }
         }
@@ -59,12 +72,12 @@ router.get('/:place_id', async (req, res) => {
         if (!getStampInfo) {
             res.status(500).send({
                 message: "Internel Server Error",
-                data : null
+                data: null
             })
-        } 
+        }
 
         else {
-            if(getStampInfo.length == 0) {
+            if (getStampInfo.length == 0) {
                 object.status = "스탬프를 찍지 않았습니다."
             }
             else {
@@ -81,7 +94,7 @@ router.get('/:place_id', async (req, res) => {
     else {
         res.status(401).send({
             message: "access denied",
-            data : null
+            data: null
         });
     }
 
@@ -97,7 +110,7 @@ router.post('/:place_id', async (req, res) => {
     const getStamp = 'SELECT p.place_id, p.place_name, p.place_category, p.place_pic, s.stamp_date, s.stamp_status FROM stamp s JOIN place p ON s.place_id = p.place_id where s.writer_id = ? AND s.place_id = ?';
     const getRank = 'SELECT * FROM place ORDER BY place_star DESC';
 
-    if(ID == -1) {
+    if (ID == -1) {
 
         let getStampInfo = await pool.execute3(getStamp, ID, place_id);
         let getRankList = await pool.execute1(getRank);
@@ -105,9 +118,9 @@ router.post('/:place_id', async (req, res) => {
         if (!getStampInfo) {
             res.status(500).send({
                 message: "Internel Server Error",
-                data : null
+                data: null
             })
-        } 
+        }
 
         else {
             res.status(201).send({
@@ -121,7 +134,7 @@ router.post('/:place_id', async (req, res) => {
     else {
         res.status(401).send({
             message: "access denied",
-            data : null
+            data: null
         });
     }
 
