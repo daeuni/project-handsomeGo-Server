@@ -17,7 +17,4 @@ router.use('/', comment);
 const user = require('./controller/user/user_routes');
 router.use('/', user);
 
-// const home = require('./controller/home/home_routes');
-// router.use('/',home);
-
 module.exports = router;

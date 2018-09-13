@@ -17,7 +17,7 @@ router.get('/', async (req, res) => {
     } 
     else {
         res.status(200).send({
-            message: "Successful Get Stamp Status Data",
+            message: "Successful Get Place Rank Data",
             data: getRankList
         });
     }
