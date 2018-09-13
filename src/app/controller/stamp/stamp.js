@@ -77,7 +77,7 @@ router.get('/:place_id', async (req, res) => {
         }
 
         else {
-            if (getStampInfo.length == 0) {
+            if (getStampInfo[0].stamp_status == 0) {
                 object.status = "스탬프를 찍지 않았습니다."
             }
             else {
@@ -107,13 +107,11 @@ router.post('/:place_id', async (req, res) => {
 
     const place_id = req.params.place_id;
 
-    const getStamp = 'SELECT p.place_id, p.place_name, p.place_category, p.place_pic, s.stamp_date, s.stamp_status FROM stamp s JOIN place p ON s.place_id = p.place_id where s.writer_id = ? AND s.place_id = ?';
-    const getRank = 'SELECT * FROM place ORDER BY place_star DESC';
+    const updateStamp = 'UPDATE stamp SET stamp_status = 1 WHERE writer_id = ? AND place_id = ?'
 
-    if (ID == -1) {
+    if (ID != -1) {
 
-        let getStampInfo = await pool.execute3(getStamp, ID, place_id);
-        let getRankList = await pool.execute1(getRank);
+        let getStampInfo = await pool.execute3(updateStamp, ID, place_id);
 
         if (!getStampInfo) {
             res.status(500).send({
@@ -125,7 +123,7 @@ router.post('/:place_id', async (req, res) => {
         else {
             res.status(201).send({
                 message: "Successful Get Stamp Data",
-                data: object
+                data: null
             });
         }
 

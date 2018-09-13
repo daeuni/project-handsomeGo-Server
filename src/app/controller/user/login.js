@@ -11,6 +11,7 @@ router.post('/', async (req, res, next) => {
 
     const checkToekn = 'SELECT * FROM writer WHERE writer_token = ?'
     const insertUser = 'INSERT INTO writer(writer_name, writer_token, writer_pic) VALUES (?, ?, ?)'
+    const defaultStamp = 'INSERT INTO stamp(place_id, writer_id) VALUES (?, ?)'
 
     let token;
 
@@ -30,6 +31,9 @@ router.post('/', async (req, res, next) => {
         //처음 이용
         else {
             let insertUserData = await db.execute4(insertUser, name, kakaoId, profileImagePath);
+            for(i = 1; i < 21; i++) {
+                await db.execute4(defaultStamp, i, insertUserData.insertId);
+            }
             token = jwt.sign(insertUserData.insertId);
         }
         res.status(200).send({
