@@ -5,8 +5,8 @@ const router = express.Router();
 const login = require('./login');
 router.use('/login', login);
 
-//임시 로그인
-const temp = require('./temp');
-router.use('/temp', temp);
+//마이페이지
+const myPage = require('./myPage');
+router.use('/mypage', myPage);
 
 module.exports = router;

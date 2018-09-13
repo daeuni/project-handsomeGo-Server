@@ -93,6 +93,14 @@ Authorization: token값
     "data": null
 }
 ```
+#### 인가 실패
+
+```json
+{
+    "message": "access denied",
+    "data": null
+}
+```
 #### INTERNAL SERVER ERROR
 
 ```json
@@ -101,11 +109,54 @@ Authorization: token값
     "data": null
 }
 ```
+------
+## 댓글 삭제
+
+| 메소드 | 경로                   | 짧은 설명 |
+| ------ | ---------------------- | --------- |
+| DELETE | /comments/{comment_id} | 댓글 삭제 |
+
+* 내가 작성한 댓글만 삭제 가능
+* 남이 작성한 댓글 삭제 요청시 404 반환
+
+### 요청 헤더
+
+```
+Content-Type: application/json
+Authorization: token값
+```
+
+### 응답 바디
+
+#### 댓글 삭제성공
+
+```json
+{
+    "message": "Successful Delete Comment",
+    "data": null
+}
+```
+#### 댓글 삭제 실패
+
+```json
+{
+    "message": "Fail Delete Comment",
+    "data": null
+}
+```
 #### 인가 실패
 
 ```json
 {
     "message": "access denied",
+    "data": null
+}
+```
+#### INTERNAL SERVER ERROR
+
+```json
+{
+    "message": "Internel Server Error",
     "data": null
 }
 ```
