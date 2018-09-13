@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
 
-//home 
-const signup = require('./home');
-router.use('/home', home);
+//장소
+const place = require('./place');
+router.use('/places', place);
 
 module.exports = router;

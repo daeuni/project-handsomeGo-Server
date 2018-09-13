@@ -1,12 +1,12 @@
 const express = require('express');
 const router = express.Router();
 
-//signup
-const signup = require('./signup');
-router.use('/signup', signup);
-
 //login
 const login = require('./login');
 router.use('/login', login);
+
+//마이페이지
+const myPage = require('./myPage');
+router.use('/mypage', myPage);
 
 module.exports = router;
