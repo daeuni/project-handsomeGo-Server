@@ -21,23 +21,25 @@ Authorization: token값(존재하지 않으면 게스트 로그인으로 간주)
 {
     "message": "Successful Get Stamp Status Data",
     "data": {
-        "status": "guest/로그인 한 사람 이름",
+        "status": "배다슬",
         "place": [
             {
                 "place_id": 1,
                 "place_name": "덕수궁돌담길",
-                "place_address": "",
+                "place_address": "서울시 중구 정동",
                 "place_star": 1,
-                "place_pic": "",
-                "stamp_status": 0
+                "place_pic": "https://s3.ap-northeast-2.amazonaws.com/project-handsomego/20171020_145830.jpg",
+                "stamp_status": 1,
+                "stamp_pic": "https://s3.ap-northeast-2.amazonaws.com/project-handsomego/stamp_1.png"
             },
             {
                 "place_id": 2,
                 "place_name": "문화비축기지",
-                "place_address": "",
+                "place_address": "서울시 마포구 증산로 87",
                 "place_star": 1,
-                "place_pic": "",
-                "stamp_status": 0
+                "place_pic": "https://s3.ap-northeast-2.amazonaws.com/project-handsomego/20171020_145830.jpg",
+                "stamp_status": 1,
+                "stamp_pic": "https://s3.ap-northeast-2.amazonaws.com/project-handsomego/stamp_2.png"
             },
             {
               	"중간 생략..."  
@@ -45,10 +47,11 @@ Authorization: token값(존재하지 않으면 게스트 로그인으로 간주)
             {
                 "place_id": 20,
                 "place_name": "다시 세운",
-                "place_address": "",
+                "place_address": "서울시 종로구 장사동",
                 "place_star": 5,
-                "place_pic": "",
-                "stamp_status": 0
+                "place_pic": "https://s3.ap-northeast-2.amazonaws.com/project-handsomego/20171020_145830.jpg",
+                "stamp_status": 0,
+                "stamp_pic": "https://s3.ap-northeast-2.amazonaws.com/project-handsomego/stamp_20.png"
             }
         ]
     }

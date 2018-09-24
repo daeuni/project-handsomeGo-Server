@@ -5,7 +5,7 @@ const pool = require('../../module/pool.js');
 
 router.get('/', async (req, res) => {
 
-    const getRankQuery = 'SELECT place_id, place_name, place_star FROM place ORDER BY place_star DESC, place_name ASC';
+    const getRankQuery = 'SELECT place_id, place_name, place_star, place_category FROM place ORDER BY place_star DESC, place_name ASC';
 
     let getRankList = await pool.execute1(getRankQuery);
 
