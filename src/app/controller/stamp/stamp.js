@@ -7,7 +7,7 @@ router.get('/', async (req, res) => {
 
     const ID = jwt.verify(req.headers.authorization);
 
-    const getStampListQuery = 'SELECT p.place_id, p.place_name, p.place_address, p.place_star, p.place_pic, s.stamp_status FROM stamp s JOIN place p on s.place_id = p.place_id where s.writer_id = ?';
+    const getStampListQuery = 'SELECT p.place_id, p.place_name, p.place_address, p.place_star, p.place_pic, s.stamp_status, p.stamp_pic FROM stamp s JOIN place p on s.place_id = p.place_id where s.writer_id = ?';
 
     const getUserQuery = 'SELECT * FROM writer WHERE writer_id = ?'
 
@@ -46,7 +46,7 @@ router.get('/:place_id', async (req, res) => {
 
     const place_id = req.params.place_id;
 
-    const getStamp = 'SELECT p.place_id, p.place_name, p.place_category, p.place_pic, s.stamp_date, s.stamp_status FROM stamp s JOIN place p ON s.place_id = p.place_id where s.writer_id = ? AND s.place_id = ?';
+    const getStamp = 'SELECT p.place_id, p.place_name, p.place_category, p.place_pic, s.stamp_date, s.stamp_status, p.stamp_pic FROM stamp s JOIN place p ON s.place_id = p.place_id where s.writer_id = ? AND s.place_id = ?';
     const getRank = 'SELECT * FROM place ORDER BY place_star DESC';
 
     if (ID != -1) {
@@ -61,6 +61,7 @@ router.get('/:place_id', async (req, res) => {
         object.place_pic = getStampInfo[0].place_pic;
         object.stamp_date = getStampInfo[0].stamp_date;
         object.stamp_status = getStampInfo[0].stamp_status;
+        object.stamp_pic = getStampInfo[0].stamp_pic;
 
         for (i = 0; i < getRankList.length; i++) {
             if (place_id == getRankList[i].place_id) {
