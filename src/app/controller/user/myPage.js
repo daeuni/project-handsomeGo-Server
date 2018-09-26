@@ -85,15 +85,12 @@ router.put('/', multiUpload, async (req, res, next) => {
                 name = getMyPage[0].writer_name;
             }
 
-            console.log(req.files.picture);
-
             let data = {
                 writer_name : name,
                 writer_pic : req.files.picture ? req.files.picture[0].location : getMyPage[0].writer_pic
             };
             
             let getMyStamp = await pool.execute3(updateMyPageQuery, data, ID);
-            console.log(getMyStamp);
             
             if (getMyStamp.length == 0) {
                 res.status(404).send({

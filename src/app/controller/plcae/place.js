@@ -8,7 +8,7 @@ router.get('/', async (req, res) => {
 
     const getPlaceQuery = 'SELECT * FROM place';
 
-    let getPlaceInfo = await pool.execute2(getPlaceQuery);
+    const getPlaceInfo = await pool.execute2(getPlaceQuery);
 
     if (!getPlaceInfo) {
         res.status(500).send({
