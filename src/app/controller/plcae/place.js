@@ -41,6 +41,7 @@ router.get('/:place_id', async (req, res) => {
     object.place_name = getPlaceInfo[0].place_name;
     object.place_address = getPlaceInfo[0].place_address;
     object.place_content = getPlaceInfo[0].place_content;
+    //object.place_simple_content = getPlaceInfo[0].place_simple_content;
     object.place_category = getPlaceInfo[0].place_category;
     object.place_star = getPlaceInfo[0].place_star;
     object.place_pic = getPlaceInfo[0].place_pic;
