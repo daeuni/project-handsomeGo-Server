@@ -108,11 +108,16 @@ router.post('/:place_id', async (req, res) => {
 
     const place_id = req.params.place_id;
 
-    const updateStamp = 'UPDATE stamp SET stamp_status = 1 WHERE writer_id = ? AND place_id = ?'
+    const updateStamp = 'UPDATE stamp SET ? WHERE writer_id = ? AND place_id = ?'
 
     if (ID != -1) {
 
-        let getStampInfo = await pool.execute3(updateStamp, ID, place_id);
+        let data = {
+            stamp_status : 1,
+            stamp_date : new Date()
+        };
+
+        let getStampInfo = await pool.execute4(updateStamp, data, ID, place_id);
 
         if (!getStampInfo) {
             res.status(500).send({

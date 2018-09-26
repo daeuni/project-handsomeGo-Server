@@ -50,6 +50,8 @@ router.post('/', multiUpload, async (req, res) => {
 
     const insertCommentQuery = 'INSERT INTO comment SET ?'
     const getMyCommentQuery = 'SELECT * FROM comment WHERE writer_id = ? AND place_id = ?'
+    const getSumStarQuery = 'SELECT star_sum FROM place WHERE place_id = ?'
+    const sumStarQuery = 'UPDATE place SET star_sum = ? WHERE place_id = ?'
 
     let data = {};
 
@@ -94,8 +96,15 @@ router.post('/', multiUpload, async (req, res) => {
                     data.comment_pic4 = req.files.pictures[3].location ? req.files.pictures[3].location : null;
                 }
             }
-
+            //댓글 작성
             let result = await pool.execute2(insertCommentQuery, data);
+
+            
+            let lastStarSum = await pool.execute2(getSumStarQuery, req.body.place_id);
+            let newStarSum = lastStarSum + req.body.star;
+            //총점 반영
+            await pool.execute2(sumStarQuery, newStarSum, req.body.place_id);
+            
 
             if (!result) {
                 res.status(500).send({

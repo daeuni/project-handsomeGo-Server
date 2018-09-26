@@ -65,7 +65,7 @@ router.put('/', multiUpload, async (req, res, next) => {
     const ID = jwt.verify(req.headers.authorization);
 
     const getMyPageQuery = 'SELECT * FROM writer WHERE writer_id = ?';
-    const updateMyPageQuery = 'UPDATE writer SET writer_name = ? AND writer_pic = ? WHERE writer_id = ?'
+    const updateMyPageQuery = 'UPDATE writer SET ? WHERE writer_id = ?'
 
     if (ID != -1) {
 
@@ -79,21 +79,22 @@ router.put('/', multiUpload, async (req, res, next) => {
         }
         else {
 
-            let name = req.body.name;
-            let picture;
+            let name = req.body.name
 
             if (!name) {
                 name = getMyPage[0].writer_name;
             }
 
-            if (req.files.picture === undefined) {
-                picture = getMyPage[0].writer_pic;
-            } else {
-                picture = req.files.picture[0].location ? req.files.picture[0].location : null;
-            }
+            console.log(req.files.picture);
 
-            let getMyStamp = await pool.execute4(updateMyPageQuery, name, picture, ID);
-
+            let data = {
+                writer_name : name,
+                writer_pic : req.files.picture ? req.files.picture[0].location : getMyPage[0].writer_pic
+            };
+            
+            let getMyStamp = await pool.execute3(updateMyPageQuery, data, ID);
+            console.log(getMyStamp);
+            
             if (getMyStamp.length == 0) {
                 res.status(404).send({
                     message: "Fail Update User",
