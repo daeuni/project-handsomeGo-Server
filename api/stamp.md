@@ -89,10 +89,11 @@ Authorization: token값
     "data": {
         "place_id": 1,
         "place_name": "덕수궁돌담길",
-        "place_category": "",
+        "place_category": "역사 문화",
         "place_pic": "https://s3.ap-northeast-2.amazonaws.com/project-handsomego/20171020_145830.jpg",
         "stamp_date": "2018-09-13T10:06:36.000Z",
-        "stamp_status": 0,
+        "stamp_status": 1,
+        "stamp_pic": "https://s3.ap-northeast-2.amazonaws.com/project-handsomego/stamp_1.png",
         "rank": 18,
         "status": "스탬프를 찍었습니다."
     }
