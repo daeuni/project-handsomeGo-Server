@@ -1,6 +1,6 @@
 # project_handsomeGo_server
 
-* 
+* API 명세서 : https://github.com/project-handsomeGo/project-handsomeGo-Server/wiki
 
 ## 의존성
 
