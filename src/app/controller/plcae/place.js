@@ -81,9 +81,8 @@ router.get('/:place_id/comments', async (req, res) => {
         let user = await pool.execute2(getUser, ID);
         let myComment = await pool.execute3(getMyComment, place_id, ID);
         let myStamp = await pool.execute3(getMyStamp, place_id, ID);
-
         //스탬프를 안 찍었을 경우
-        if (myStamp.length == 0) {
+        if (myStamp[0].stamp_status == 0) {
             object.message = user[0].writer_name + "님 평가해 주세요."
             object.status = "스탬프를 먼저 찍어주세요"
             object.myComment = null;
@@ -98,8 +97,8 @@ router.get('/:place_id/comments', async (req, res) => {
             }
             //댓글을 달았을 경우
             else {
-                object.message = null
-                object.status = null
+                object.message = "평가 완료."
+                object.status = "평가 완료."
                 object.myComment = myComment
             }
         }
