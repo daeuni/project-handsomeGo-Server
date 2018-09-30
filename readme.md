@@ -1,4 +1,4 @@
-# 2018년 서울시 앱 공모전 출품작 잘생겼GOproject_handsomeGo_server
+# 2018년 서울시 앱 공모전 출품작 잘생겼GO
 
 * API 명세서 : https://github.com/project-handsomeGo/project-handsomeGo-Server/wiki
 
